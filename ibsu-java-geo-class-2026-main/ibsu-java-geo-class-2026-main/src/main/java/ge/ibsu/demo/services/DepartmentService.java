@@ -2,6 +2,7 @@ package ge.ibsu.demo.services;
 
 import ge.ibsu.demo.entities.Department;
 import ge.ibsu.demo.repositories.DepartmentRepository;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,6 @@ public class DepartmentService {
     }
 
     public Department getById(Long id) throws Exception {
-        return departmentRepository.findById(id).orElseThrow(() -> new Exception("DEPARTMENT_NOT_FOUND"));
+        return departmentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("DEPARTMENT_NOT_FOUND"));
     }
 }
