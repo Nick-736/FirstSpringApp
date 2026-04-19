@@ -1,9 +1,6 @@
 package ge.ibsu.demo.controllers;
 
-import ge.ibsu.demo.dto.AddEmployee;
-import ge.ibsu.demo.dto.EmployeePhoneInfo;
-import ge.ibsu.demo.dto.RequestData;
-import ge.ibsu.demo.dto.SearchEmployee;
+import ge.ibsu.demo.dto.*;
 import ge.ibsu.demo.entities.Employee;
 import ge.ibsu.demo.services.DepartmentService;
 import ge.ibsu.demo.services.EmployeeService;
@@ -35,28 +32,28 @@ public class EmployeeController {
 
     @PostMapping("/add")
     public Employee add(@RequestBody AddEmployee addEmployee) throws Exception {
-        return employeeService.save(addEmployee,null);
+        return employeeService.saveEmployee(addEmployee,null);
     }
 
     @PutMapping("/{id}")
     public Employee edit(@PathVariable Long id, @RequestBody AddEmployee addEmployee) throws  Exception{
-        return  employeeService.save(addEmployee, id);
+        return  employeeService.saveEmployee(addEmployee, id);
     }
-    @GetMapping("/{id}/employees")
-    public  List<Employee> getEmployees(@PathVariable Long id ){
-        return employeeService.getByDepartment(id);
-    }
+//    @GetMapping("/{id}/employees")
+//    public  List<Employee> getEmployees(@PathVariable Long id ){
+//        return employeeService.getByDepartment(id);
+//    }
 
     @PostMapping("/search")
     public Page<Employee> search(@RequestBody RequestData<SearchEmployee> rd){
         return employeeService.search(rd.getData(), rd.getPaging());
     }
-    @PostMapping("/searchByPhone")
-    public List<EmployeePhoneInfo> searchByPhone(@RequestBody RequestData<SearchEmployee> rd){
-        return employeeService.getByPhone(rd.getData());
-    }
-    @PostMapping("/searchFullContact")
-    public EmployeePhoneInfo searchFullContact(@RequestBody RequestData<SearchEmployee> rd){
-        return employeeService.getContactInfo(rd.getData());
-    }
+//    @PostMapping("/searchByPhone")
+//    public List<EmployeePhoneInfo> searchByPhone(@RequestBody RequestData<SearchEmployee> rd){
+//        return employeeService.getByPhone(rd.getData());
+//    }
+@PostMapping("/searchContactInfo")
+public EmployeeContactInfo searchContactInfo(@RequestBody RequestData<SearchEmployee> rd) {
+    return employeeService.getEmployeeContacts(rd.getData());
+}
 }

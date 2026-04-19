@@ -1,6 +1,5 @@
 package ge.ibsu.demo.repositories;
 
-import ge.ibsu.demo.dto.EmployeePhoneInfo;
 import ge.ibsu.demo.entities.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,23 +14,27 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query("select e from Employee e where e.department.id = :depId")
-    List<Employee> getByDepartment(@Param("depId") Long departmentId);
+    List<Employee> findAllByDepartment(@Param("depId") Long departmentId);
 
-    @Query(value="select e from Employee e where e.department.id = :depId",
-    nativeQuery = true)
-    List<Employee> getByDepartmentNativeQuery(@Param("depId") Long departmentId);
+    @Query(
+            value = "select * from employees e where e.department_id = :depId",
+            nativeQuery = true
+    )
+    List<Employee> findAllByDepartmentViaNative(@Param("depId") Long departmentId);
 
-    @Query("select e from Employee e" +
-    "where (:searchText is null or concat(e.firstName, concat(' ', e.lastName)) like :searchText)")
-    Page<Employee> search(@Param("searchText") String searchText, Pageable pageable);
+    @Query("select e from Employee e " +
+            "where (:searchText is null or concat(e.firstName, concat(' ', e.lastName)) like :searchText)")
+    Page<Employee> searchEmployees(@Param("searchText") String searchText, Pageable pageable);
 
-    @Query(value = "select * from Employee e" +
-            "where (:searchText is null or concat(e.firstName, concat(' ', e.lastName)) like :searchText)",
-    countQuery = "select count(*) from employees" +
-            "(:searchText is null or concat(e.firstName, concat(' ', e.lastName)) like :searchText)",
-    nativeQuery = true)
-    Page<Employee> searchViaNative(@Param("searchText") String searchText, Pageable pageable);
+    @Query(
+            value = "select * from employees e " +
+                    "where (:searchText is null or concat(e.first_name, concat(' ', e.last_name)) like :searchText)",
+            countQuery = "select count(*) from employees e " +
+                    "where (:searchText is null or concat(e.first_name, concat(' ', e.last_name)) like :searchText)",
+            nativeQuery = true
+    )
+    Page<Employee> searchEmployeesViaNative(@Param("searchText") String searchText, Pageable pageable);
 
-    List<EmployeePhoneInfo> findAllByPhoneLike(String phone);
     <T> T findByPhoneOrEmail(String phone, String email, Class<T> type);
+
 }

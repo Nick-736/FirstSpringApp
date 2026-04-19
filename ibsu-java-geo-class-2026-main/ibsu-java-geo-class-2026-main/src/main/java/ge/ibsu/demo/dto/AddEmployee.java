@@ -1,10 +1,11 @@
 package ge.ibsu.demo.dto;
 
 public class AddEmployee {
+
     private String firstName;
     private String lastName;
-    private String phone;
     private String email;
+    private String phone;
     private Double salary;
     private Long departmentId;
 
@@ -24,20 +25,20 @@ public class AddEmployee {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Double getSalary() {
@@ -48,11 +49,11 @@ public class AddEmployee {
         this.salary = salary;
     }
 
-    public Long getDepartmendId() {
+    public Long getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmendId(Long departmendId) {
-        this.departmentId = departmendId;
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 }
