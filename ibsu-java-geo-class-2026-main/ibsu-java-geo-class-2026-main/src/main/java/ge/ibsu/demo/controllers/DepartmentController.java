@@ -1,41 +1,28 @@
 package ge.ibsu.demo.controllers;
 
-import ge.ibsu.demo.entities.Department;
+import ge.ibsu.demo.dto.DepartmentInfo;
 import ge.ibsu.demo.services.DepartmentService;
-import ge.ibsu.demo.entities.Employee;
-import ge.ibsu.demo.services.EmployeeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/departments")
-public class DepartmentController {
+@RequestMapping("/departments")
+public class DepartmentController extends BaseController {
 
-   private final DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
-    private final EmployeeService employeeService;
-
-    public DepartmentController(DepartmentService departmentService, EmployeeService employeeService) {
+    public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
-        this.employeeService = employeeService;
     }
 
-    @GetMapping("/all")
-    public List<Department> getAll() {
-        return departmentService.getAll();
-    }
+    @GetMapping
+    public ResponseEntity<List<DepartmentInfo>> getDepartments(
+            @RequestParam(required = false) String country,
+            @RequestParam(required = false) String city) {
 
-    @GetMapping("/{id}")
-    public Department getById(@PathVariable Long id) throws Exception {
-        return departmentService.getById(id);
-    }
-
-    @GetMapping("/{id}/employees")
-    public List<Employee> getEmployees(@PathVariable Long id) {
-        return employeeService.getByDepartment(id);
+        List<DepartmentInfo> result = departmentService.getDepartments(country, city);
+        return ResponseEntity.ok(result);
     }
 }
