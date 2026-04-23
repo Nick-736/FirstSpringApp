@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //git commit -m "Changes Added"
 //git push origin main/git pull origin main
 //git clone https://github.com/Nick-736/FirstSpringApp.git.
+//git remote set-url origin https://github.com/Nick-736/FirstSpringApp.git
+
 
 
 @SpringBootApplication
